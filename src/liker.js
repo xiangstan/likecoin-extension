@@ -3,6 +3,7 @@ const button = document.createElement("div");
 const css = document.createElement("style");
 var href = url.split("/");
 var steemId = href[href.length-2];
+//steem.api.setOptions({ url: "https://anyx.io" });
 
 const getFollowing = (start = 0, limit = 1000, following = []) => {
   return new Promise((resolve, reject) => {
@@ -127,7 +128,6 @@ window.setInterval(function() {
   let tempurl = window.location.href;
   if(tempurl !== url) {
     button.textContent = "";
-    console.log(tempurl);
     url = tempurl;
     href = url.split("/");
     steemId = href[href.length-2];
