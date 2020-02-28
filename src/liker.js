@@ -2,7 +2,8 @@ var url = window.location.href;
 const button = document.createElement("div");
 const css = document.createElement("style");
 const href = url.split("/");
-var likerId = href[href.length-2];
+var steemId = href[href.length-2];
+steem.api.setOptions({ url: "https://anyx.io" });
 
 const getFollowing = (start = 0, limit = 1000, following = []) => {
   return new Promise((resolve, reject) => {
@@ -29,10 +30,21 @@ const getFollowing = (start = 0, limit = 1000, following = []) => {
   });
 }
 
-const isLiker = (likerId, following) => {
+const getLikerId = (profile) => {
+  const location = profile.location;
+  console.log(location)
+  if(typeof location !=="undefined" && location !== "") {
+    const loc = location.split(":");
+    if( loc[0] === "likerid" ) { return loc[1]; }
+    else { return false; }
+  }
+  else { return false; }
+}
+
+const isLiker = (steemId, following) => {
   let flag = false;
-  if(likerId.startsWith("@")) {
-    const id = likerId.substr(1);
+  if(steemId.startsWith("@")) {
+    const id = steemId.substr(1);
     for(let i = 0; i < following.length; i++) {
       if(id === following[i]) {
         flag = true;
@@ -48,17 +60,29 @@ const isLiker = (likerId, following) => {
 async function createLikerButton() {
   let following = await getFollowing();
   //url = encodeURIComponent(url);
-  likerId = await isLiker(likerId, following);
-  console.log(likerId);
-  if(likerId) {
-    const src = `https://button.like.co/in/embed/${likerId}/button?referrer=${url}`;
-    console.log(src);
-    const iframe = document.createElement("iframe");
-    iframe.setAttribute("src", src);
-    iframe.setAttribute("frameborder", 0);
-    iframe.setAttribute("scrolling", 0);
-    iframe.setAttribute("target", "_top");
-    button.appendChild(iframe);
+  steemId = await isLiker(steemId, following);
+  //console.log(steemId);
+  if(steemId) {
+    steem.api.getAccounts([steemId], function(err, result) {
+      if(err === null) {
+        const data = result[0];
+        const profile = JSON.parse(data.json_metadata);
+        const likerId = getLikerId(profile.profile);
+        if(likerId) {
+          const src = `https://button.like.co/in/embed/${likerId}/button?referrer=${url}`;
+          //console.log(src);
+          const iframe = document.createElement("iframe");
+          iframe.setAttribute("src", src);
+          iframe.setAttribute("frameborder", 0);
+          iframe.setAttribute("scrolling", 0);
+          iframe.setAttribute("target", "_top");
+          button.appendChild(iframe);
+        }
+      }
+      else{
+        console.log(err);
+      }
+    });
   }
   else{
     console.log("Not a registered Liker");
