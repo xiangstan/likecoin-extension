@@ -35,7 +35,7 @@ const getLikerId = (profile) => {
   console.log(location)
   if(typeof location !=="undefined" && location !== "") {
     const loc = location.split(":");
-    if( loc[0] === "likerid" ) { return loc[1]; }
+    if( loc[0].trim() === "likerid" ) { return loc[1].trim(); }
     else { return false; }
   }
   else { return false; }
@@ -98,7 +98,7 @@ css.innerHTML = `
   height: 240px;
   width: 500px;
   overflow: hidden;
-  z-index: 100
+  z-index: 2000
 }
 .likecoin-button > div {
   padding-top: 49.48454%;
