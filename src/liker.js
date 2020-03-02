@@ -4,6 +4,7 @@ const css = document.createElement("style");
 var href = url.split("/");
 var steemId = href[href.length-2];
 //steem.api.setOptions({ url: "https://anyx.io" });
+steem.api.setOptions({ url: "https://steemd.minnowsupportproject.org" });
 
 const getFollowing = (start = 0, limit = 1000, following = []) => {
   return new Promise((resolve, reject) => {
@@ -43,8 +44,12 @@ const getLikerId = (profile) => {
 
 const isLiker = (steemId, following) => {
   let flag = false;
-  if(steemId.startsWith("@")) {
-    const id = steemId.substr(1);
+  let id = "";
+  if ( steemId.startsWith("#@") ) {
+    steemId = href[3];
+  }
+  if(steemId.startsWith("@")) { id = steemId.substr(1); }
+  if ( id.length > 0 ){
     for(let i = 0; i < following.length; i++) {
       if(id === following[i]) {
         flag = true;
