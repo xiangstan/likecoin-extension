@@ -11,6 +11,7 @@
     {
       "matches": [
         "*://*.busy.org/*",
+		"*://*.steem.buzz/*",
         "*://*.steemit.com/*",
         "*://*.steempeak.com/*"
       ],

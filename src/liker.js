@@ -4,7 +4,7 @@ const css = document.createElement("style");
 var href = url.split("/");
 var steemId = href[href.length-2];
 //steem.api.setOptions({ url: "https://anyx.io" });
-steem.api.setOptions({ url: "https://steemd.minnowsupportproject.org" });
+steem.api.setOptions({ url: "https://techcoderx.com" });
 
 const getFollowing = (start = 0, limit = 1000, following = []) => {
   return new Promise((resolve, reject) => {
