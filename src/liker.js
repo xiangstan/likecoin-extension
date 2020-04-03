@@ -10,8 +10,7 @@ if (typeof fTimeout === "undefined") {
   var fTimeout = parseInt(Math.floor(Date.now()));
   var setElem = 0;
 }
-steem.api.setOptions({ url: "https://anyx.io" });
-//steem.api.setOptions({ url: "https://techcoderx.com" });
+steem.api.setOptions({ url: "https://api.steemit.com" });
 
 chrome.runtime.onMessage.addListener( function(message) {
   chrome.storage.local.set({disableRunning: message});

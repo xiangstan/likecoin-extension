@@ -14,7 +14,8 @@
 		"*://*.steem.buzz/*",
         "*://*.steemit.com/*",
         "*://*.steempeak.com/*",
-		"*://hive.blog/*"
+		"*://hive.blog/*",
+		"*://peakd.com/*"
       ],
       "js": [
         "steem.js",
